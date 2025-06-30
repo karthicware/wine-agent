@@ -55,12 +55,13 @@ query_and_analyze_agent = LlmAgent(
 
     1. First, execute the query by calling the `execute_db_query` tool.
     2. Analyze the result from the tool.
+       - If the result contains an 'error' key, call the `exit_loop` tool with an error message and stop the investigation.
        - If the result contains data, formulate a clear, user-friendly answer based on the data. Then, you MUST call the `exit_loop` tool with this final answer.
-       - If the result is empty or contains an error, do not call the exit tool. Simply output the raw result from the `execute_db_query` tool.
+       - If the result is empty, do not call the exit tool. Simply output the raw result from the `execute_db_query` tool.
     """,
     tools=[execute_db_query, exit_loop],
     output_key=STATE_QUERY_RESULT,
-    description="Executes the current SQL query and analyzes the result, exiting if data is found."
+    description="Executes the current SQL query and analyzes the result, exiting if data is found or if a DB error occurs."
 )
 
 # STEP 2b: Investigator Agent (inside the loop)
