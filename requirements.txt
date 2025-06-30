@@ -1,0 +1,4 @@
+google-adk
+pymysql
+python-dotenv
+litellm
